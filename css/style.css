@@ -1,0 +1,16 @@
+body{
+    background-color: #ccc;
+    width: 100%;
+}
+
+#chart{
+    background-color: #ccc;
+    width: 1000px;
+    height: 500px;
+    margin: 50px auto;
+    border: solid 1px black;
+}
+
+svg{
+    background-color: #ffffff;
+}
