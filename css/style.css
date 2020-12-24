@@ -14,3 +14,16 @@ body{
 svg{
     background-color: #ffffff;
 }
+
+.dot{
+    stroke: black;
+    stroke-width: 1px;
+}
+
+.axis line, .axis path{
+stroke: #bbb;
+}
+
+.axis text{
+    fill: #bbb;
+}
