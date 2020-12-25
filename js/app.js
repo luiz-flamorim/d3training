@@ -11,7 +11,7 @@ const svg = d3.select('#chart')
     .attr('width', width)
     .attr('height', height);
 
-circles = d3.csv('boston-housing.csv')
+circles = d3.csv('data/boston-housing.csv')
     .then(function (data) {
 
         data = data.sort(function (a, b) {
