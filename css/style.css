@@ -22,11 +22,16 @@ stroke: #bbb;
 .axis text{
     fill: #bbb;
 }
+.axisLabel{
+    fill: #bbb;
+    font: sans-serif;
+    font-size: 10px;
+}
 
 #tooltip{
     position: absolute;
     background-color: #ffffff;
     padding: 20px;
     border: solid 1px black;
-    /* opacity: 0; */
+    opacity: 0;
 }

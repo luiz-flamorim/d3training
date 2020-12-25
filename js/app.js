@@ -29,7 +29,7 @@ circles = d3.csv('data/boston-housing.csv')
         })
 
         xScale = d3.scaleLinear()
-            .domain([xMinMax[0], xMinMax[1]])
+            .domain([xMinMax[1], xMinMax[0]])
             .range([(margin + rValues[1]), (width - margin - rValues[1])])
         yScale = d3.scaleLinear()
             .domain([yMinMax[1], yMinMax[0]])
@@ -46,8 +46,12 @@ circles = d3.csv('data/boston-housing.csv')
             .enter()
             .append('circle')
             .attr('class', 'dot')
-            .attr('cx', width/2)
-            .attr('cy', height/2)
+            .attr('cx', function (d) {
+                return xScale(d.poor);
+            })
+            .attr('cy', function (d) {
+                return yScale(d.rooms);
+            })
             .attr('r', 0)
             .attr('fill', function (d) {
                 return cScale(d.charles)
@@ -55,16 +59,25 @@ circles = d3.csv('data/boston-housing.csv')
             .style('opacity', function (d) {
                 return d.charles == 1 ? 0.5 : 0.3;
             })
-            .on('mouseover',function(d){
-                let info = d.poor
+            .on('mouseover', function (event, d) {
+                console.log(svg.select('circle'))
+                info = 'X = Poor families ' + d.poor + '<br />'
+                info += 'Y = Number of rooms ' + d.rooms + '<br />'
+                info += 'Radius = Property value ' + d.value + '<br />'
                 d3.select('#tooltip')
                     .html(info)
+                    .style('left', (event.pageX - 80) + 'px')
+                    .style('top', (event.pageY - 150) + 'px')
+                    .style('opacity', 0.8)
 
-                    
+            })
+            .on('mouseout', function (event, d) {
+                d3.select('#tooltip')
+                    .style('opacity', 0)
             })
 
         xAxis = d3.axisBottom(xScale)
-            .tickValues([xMinMax[0], xMinMax[1]])
+            .ticks(0)
         xAxisG = svg.append('g')
             .attr('id', 'xAxis')
             .attr('class', 'axis')
@@ -79,21 +92,30 @@ circles = d3.csv('data/boston-housing.csv')
         yAxisG.call(yAxis)
             .attr('transform', 'translate(' + (margin) + ',0)')
 
+        svg.append('text')
+            .attr('x', xScale(xMinMax[0]))
+            .attr('y', yScale(yMinMax[0]) + margin)
+            .attr('class','axisLabel')
+            .attr('text-anchor','middle')
+            .text('more wealthy')
+        svg.append('text')
+            .attr('x', xScale(xMinMax[1]))
+            .attr('y', yScale(yMinMax[0]) + margin)
+            .attr('class','axisLabel')
+            .attr('text-anchor','middle')
+            .text('less wealthy')
+
         update();
     });
 
 function update() {
     circles.transition()
         .delay(function (d, i) {
-            return i * 5
+            return i * 3
         })
         .attr('r', function (d) {
             return rScale(d.value)
         })
-        .attr('cx',function (d) {
-            return xScale(d.poor);
-        })
-        .attr('cy', function (d) {
-            return yScale(d.rooms);
-        })
+
+
 }
