@@ -15,15 +15,18 @@ svg{
     background-color: #ffffff;
 }
 
-.dot{
-    stroke: black;
-    stroke-width: 1px;
-}
-
 .axis line, .axis path{
 stroke: #bbb;
 }
 
 .axis text{
     fill: #bbb;
+}
+
+#tooltip{
+    position: absolute;
+    background-color: #ffffff;
+    padding: 20px;
+    border: solid 1px black;
+    /* opacity: 0; */
 }

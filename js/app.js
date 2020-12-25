@@ -39,26 +39,28 @@ circles = d3.csv('data/boston-housing.csv')
             .range([rValues[0], rValues[1]])
         cScale = d3.scaleOrdinal()
             .domain([0, 1])
-            .range(['#333', '#ff6600'])
+            .range(['#333', 'turquoise'])
 
         circles = svg.selectAll('.dot')
             .data(data)
             .enter()
             .append('circle')
             .attr('class', 'dot')
-            .attr('cx', function (d) {
-                return xScale(d.poor);
-            })
-            .attr('cy', function (d) {
-                return yScale(d.rooms);
-            })
+            .attr('cx', width/2)
+            .attr('cy', height/2)
             .attr('r', 0)
-
             .attr('fill', function (d) {
                 return cScale(d.charles)
             })
             .style('opacity', function (d) {
-                return d.charles == 1 ? 1 : 0.3;
+                return d.charles == 1 ? 0.5 : 0.3;
+            })
+            .on('mouseover',function(d){
+                let info = d.poor
+                d3.select('#tooltip')
+                    .html(info)
+
+                    
             })
 
         xAxis = d3.axisBottom(xScale)
@@ -82,10 +84,16 @@ circles = d3.csv('data/boston-housing.csv')
 
 function update() {
     circles.transition()
-    .delay(function(d,i){
-        return i * 2
-    })
+        .delay(function (d, i) {
+            return i * 5
+        })
         .attr('r', function (d) {
             return rScale(d.value)
-        });
+        })
+        .attr('cx',function (d) {
+            return xScale(d.poor);
+        })
+        .attr('cy', function (d) {
+            return yScale(d.rooms);
+        })
 }
